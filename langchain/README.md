@@ -1,0 +1,2 @@
+# This folder holds all the code related to LangChain covered in my Youtube Channel.
+Youtube Channel --> [Data Science Basics](https://www.youtube.com/@datasciencebasics?sub_confirmation=1)
