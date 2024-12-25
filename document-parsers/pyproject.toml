@@ -1,0 +1,29 @@
+[project]
+name = "document-parsers"
+version = "0.1.0"
+description = "Exloring different document parsers"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "ipykernel>=6.29.5",
+    "llama-index-embeddings-ollama>=0.5.0",
+    "llama-index>=0.12.8",
+    "llama-index-core>=0.12.8",
+    "llama-index-embeddings-huggingface>=0.4.0",
+    "llama-index-llms-huggingface-api>=0.3.0",
+    "llama-index-llms-ollama>=0.5.0",
+    "llama-index-node-parser-docling>=0.3.0",
+    "llama-index-readers-docling>=0.3.0",
+    "llama-index-readers-file>=0.4.1",
+    "llama-index-vector-stores-milvus>=0.4.0",
+    "python-dotenv>=1.0.1",
+    "pypdf2>=3.0.1",
+    "easyocr>=1.7.2",
+    "rich>=13.9.4",
+    "pillow>=10.4.0",
+    "pyarrow>=18.1.0",
+    "fastparquet>=2024.11.0",
+    "datasets>=3.2.0",
+    "ocrmac>=1.0.0",
+    "matplotlib>=3.10.0",
+]
