@@ -26,4 +26,5 @@ dependencies = [
     "datasets>=3.2.0",
     "ocrmac>=1.0.0",
     "matplotlib>=3.10.0",
+    "toml>=0.10.2",
 ]
