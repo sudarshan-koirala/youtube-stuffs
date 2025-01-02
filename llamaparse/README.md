@@ -17,9 +17,14 @@
     uv sync
     ```
 
-4. Run the python file,
+4. Provide environment variables from [llamacloud](https://cloud.llamaindex.ai/project/98f145ce-812c-4f7c-9a0c-c6b51993a12b/api-key) and [groq](https://console.groq.com/keys) in the `.env` file.
+    - Rename `.env.example` to `.env`
+    - Provide your env variables inside it
     ```
-    uv run llamaparse.py
+    LLAMA_CLOUD_API_KEY="llx-xxxxxxxxxxx"
+    GROQ_API_KEY="gsk_xxxxxxxx"
     ```
+
+4. Follow along with me in the `llamaparse.ipynb` file.
 
 That's it. Happy learning 😎
