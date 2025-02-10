@@ -3,13 +3,10 @@ import os
 from typing import Iterable
 from langchain_core.documents import Document as LCDocument
 from langchain.prompts import ChatPromptTemplate
-from langchain_community.embeddings.fastembed import FastEmbedEmbeddings
+from langchain_huggingface.embeddings import HuggingFaceEmbeddings
 from langchain.schema.runnable import Runnable, RunnablePassthrough, RunnableConfig
 from langchain.schema import StrOutputParser
 from langchain.callbacks.base import BaseCallbackHandler
-
-from qdrant_client import QdrantClient
-
 from langchain_ollama import OllamaLLM
 from langchain_qdrant import QdrantVectorStore
 from langchain_ollama import OllamaLLM
@@ -22,24 +19,12 @@ load_dotenv()
 
 
 qdrant_url = os.getenv("QDRANT_URL_LOCALHOST")
-client = QdrantClient(url=qdrant_url)
+EMBED_MODEL_ID = "sentence-transformers/all-MiniLM-L6-v2"
 
-custom_prompt_template = """Use the following pieces of information to answer the user's question.
-If you don't know the answer, just say that you don't know, don't try to make up an answer.
-
-Context: {context}
-Question: {question}
-
-Only return the helpful answer below and nothing else.
-Helpful answer:
-"""
 
 llm = OllamaLLM(
     model="deepseek-r1:latest"
 )
-
-def format_docs(docs: Iterable[LCDocument]):
-    return "\n\n".join(doc.page_content for doc in docs)
 
 
 @cl.on_chat_start
@@ -55,9 +40,9 @@ async def on_chat_start():
     def format_docs(docs):
         return "\n\n".join([d.page_content for d in docs])
 
-    embeddings = FastEmbedEmbeddings()
+    embedding = HuggingFaceEmbeddings(model_name=EMBED_MODEL_ID)
     
-    vectorstore = QdrantVectorStore.from_existing_collection(embedding=embeddings, collection_name="rag", url = qdrant_url)
+    vectorstore = QdrantVectorStore.from_existing_collection(embedding=embedding, collection_name="rag", url = qdrant_url)
     
     retriever = vectorstore.as_retriever()
 

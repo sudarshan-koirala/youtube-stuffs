@@ -3,13 +3,15 @@ import os
 # nest_asyncio.apply()
 
 from typing import Iterator
-from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain_community.embeddings.fastembed import FastEmbedEmbeddings
+from langchain.text_splitter import RecursiveCharacterTextSplitter, MarkdownHeaderTextSplitter
+from langchain_huggingface.embeddings import HuggingFaceEmbeddings
 from langchain_qdrant import QdrantVectorStore
 from langchain_community.document_loaders import DirectoryLoader
 from langchain_core.document_loaders import BaseLoader
 from langchain_core.documents import Document as LCDocument
-from docling.document_converter import DocumentConverter
+from langchain_docling import DoclingLoader
+from docling.chunking import HybridChunker
+from langchain_docling.loader import ExportType
 
 # bring in our QDRANT_URL_LOCALHOST
 from dotenv import load_dotenv
@@ -17,47 +19,52 @@ load_dotenv()
 
 
 qdrant_url = os.getenv("QDRANT_URL_LOCALHOST")
-chunk_size = 300
-chunk_overlap = 30
-
-
-
-class DoclingPDFLoader(BaseLoader):
-    def __init__(self, file_path: str | list[str]) -> None:
-        self._file_paths = file_path if isinstance(file_path, list) else [file_path]
-        self._converter = DocumentConverter()
-
-    def lazy_load(self) -> Iterator[LCDocument]:
-        for source in self._file_paths:
-            dl_doc = self._converter.convert(source).document
-            text = dl_doc.export_to_markdown()
-            yield LCDocument(page_content=text)
+EMBED_MODEL_ID = "sentence-transformers/all-MiniLM-L6-v2"
+EXPORT_TYPE = ExportType.DOC_CHUNKS
+FILE_PATH = "./data/DeepSeek_R1.pdf"
             
 
 
 # Create vector database
 def create_vector_database():
-        
-    loader = DoclingPDFLoader(file_path="./data/deepseek_R1.pdf")
-    # Split loaded documents into chunks
-    text_splitter = RecursiveCharacterTextSplitter(chunk_size=chunk_size, chunk_overlap=chunk_overlap)
+    
+    loader = DoclingLoader(
+        file_path=FILE_PATH,
+        export_type=EXPORT_TYPE,
+        chunker=HybridChunker(tokenizer=EMBED_MODEL_ID),
+    )
+
     docling_documents = loader.load()
+    
+    # Determining the splits
+    
+    if EXPORT_TYPE == ExportType.DOC_CHUNKS:
+        splits = docling_documents
+    elif EXPORT_TYPE == ExportType.MARKDOWN:
+        splitter = MarkdownHeaderTextSplitter(
+            headers_to_split_on=[
+                ("#", "Header_1"),
+                ("##", "Header_2"),
+                ("###", "Header_3"),
+            ],
+        )
+        splits = [split for doc in docling_documents for split in splitter.split_text(doc.page_content)]
+    else:
+        raise ValueError(f"Unexpected export type: {EXPORT_TYPE}")
+    
     
     with open('data/output_docling.md', 'a') as f:  # Open the file in append mode ('a')
         for doc in docling_documents:
             f.write(doc.page_content + '\n')
-        
-        
-    splits = text_splitter.split_documents(docling_documents)
     
     
     # Initialize Embeddings
-    embeddings = FastEmbedEmbeddings()
+    embedding = HuggingFaceEmbeddings(model_name=EMBED_MODEL_ID)
     
     # Create and persist a Qdrant vector database from the chunked documents
     vectorstore = QdrantVectorStore.from_documents(
         documents=splits,
-        embedding=embeddings,
+        embedding=embedding,
         url=qdrant_url,
         collection_name="rag",
     )

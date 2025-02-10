@@ -22,4 +22,5 @@ dependencies = [
     "grpcio==1.60.1",
     "grpcio-status==1.60.1",
     "langchain-groq>=0.2.4",
+    "langchain-docling>=0.2.0",
 ]

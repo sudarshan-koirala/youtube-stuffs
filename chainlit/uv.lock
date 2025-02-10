@@ -300,6 +300,7 @@ dependencies = [
     { name = "grpcio-status" },
     { name = "langchain" },
     { name = "langchain-community" },
+    { name = "langchain-docling" },
     { name = "langchain-groq" },
     { name = "langchain-huggingface" },
     { name = "langchain-ollama" },
@@ -321,6 +322,7 @@ requires-dist = [
     { name = "grpcio-status", specifier = "==1.60.1" },
     { name = "langchain", specifier = ">=0.3.17" },
     { name = "langchain-community", specifier = ">=0.3.16" },
+    { name = "langchain-docling", specifier = ">=0.2.0" },
     { name = "langchain-groq", specifier = ">=0.2.4" },
     { name = "langchain-huggingface", specifier = ">=0.1.2" },
     { name = "langchain-ollama", specifier = ">=0.2.3" },
@@ -1604,6 +1606,19 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/57/b3/426268e07273c395affc6dd02cdf89803888121cfc59ce60922f363aeff8/langchain_core-0.3.33.tar.gz", hash = "sha256:b5dd93a4e7f8198d2fc6048723b0bfecf7aaf128b0d268cbac19c34c1579b953", size = 331492 }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/98/78/463bc92174555cc04b3e234faa169bb8b58f36fff77892d7b8ae2b4f58e4/langchain_core-0.3.33-py3-none-any.whl", hash = "sha256:269706408a2223f863ff1f9616f31903a5712403199d828b50aadbc4c28b553a", size = 412656 },
+]
+
+[[package]]
+name = "langchain-docling"
+version = "0.2.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "docling" },
+    { name = "langchain-core" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/59/37/b75a8f55b16c209bb16cfc390fda6598431c5834041ab26b22204ef7c9eb/langchain_docling-0.2.0.tar.gz", hash = "sha256:94d11e5ec611b8a17809de9efba303eef2f0fc817f7ebdc46d737e58ecd88820", size = 4522 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/bc/9f/ee56bbb9d3ad97e5b4d1403e105fa00faf91a23bff1e2a76065735319aeb/langchain_docling-0.2.0-py3-none-any.whl", hash = "sha256:eff3e7cfcbd5bc56b9356108ec0475ee0487ec1227914b3cebb60fe288dae04c", size = 4802 },
 ]
 
 [[package]]
