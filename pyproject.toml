@@ -1,0 +1,19 @@
+[project]
+name = "agno-tutorial"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "agno>=0.1.0",
+    "duckduckgo-search>=7.3.2",
+    "fastapi>=0.115.8",
+    "lancedb>=0.19.0",
+    "openai>=1.61.1",
+    "pypdf>=5.3.0",
+    "python-dotenv>=1.0.1",
+    "sqlalchemy>=2.0.38",
+    "tantivy>=0.22.0",
+    "uvicorn>=0.34.0",
+    "yfinance>=0.2.52",
+]
