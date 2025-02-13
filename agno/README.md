@@ -1,0 +1,1 @@
+## Video link covering the code in this folder. [Building Your First Agent With Agno AGI](https://youtu.be/s7Kkc6vA2K0?si=00qWBt9ibplgGRpd)
