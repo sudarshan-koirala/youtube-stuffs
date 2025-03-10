@@ -1,0 +1,3 @@
+{"conversationTurns":[{"referenceResponses":[{"content":[{"text":"The decoder is composed of a stack of N = 6 identical layers."}]}],"prompt":{"content":[{"text":"How many identical layers does doecoder has?"}]}}]}
+{"conversationTurns":[{"referenceResponses":[{"content":[{"text":"It was trained on the standard WMT 2014 English-German dataset consisting of about 4.5 million sentence pairs."}]}],"prompt":{"content":[{"text":"What does the training data constists of?"}]}}]}
+{"conversationTurns":[{"referenceResponses":[{"content":[{"text":"The model was trained on one machine with 8 NVIDIA P100 GPUs."}]}],"prompt":{"content":[{"text":"What was the hardware used to train the model?"}]}}]}
